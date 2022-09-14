@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "fastapi-starter"
+name = "app"
 version = "0.1.0"
 description = "FastAPI, SQLModel, asyncpg starter project."
 authors = ["molu <mmol@tutanota.com>"]
 readme = "README.md"
-packages = [{include = "fastapi_starter"}]
+packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
