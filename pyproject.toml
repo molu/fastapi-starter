@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "fastapi-starter"
+version = "0.1.0"
+description = "FastAPI, SQLModel, asyncpg starter project."
+authors = ["molu <mmol@tutanota.com>"]
+readme = "README.md"
+packages = [{include = "fastapi_starter"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.84.0"
+sqlmodel = "^0.0.8"
+asyncpg = "^0.26.0"
+alembic = "^1.8.1"
+uvicorn = "^0.18.3"
+gunicorn = "^20.1.0"
+SQLAlchemy = "1.4.35"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.8.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+pytest = "^7.1.3"
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+include = "\\.pyi?$"
+exclude = "alembic/,.venv"
+
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 88
+skip_gitignore = true
+skip_glob = ["src/blib2to3", "tests/data", "profiling"]
+known_first_party = ["black", "blib2to3", "blackd", "_black_version"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
