@@ -8,11 +8,13 @@ from pydantic import AnyHttpUrl, validator
 class BaseConfig:
     # Core
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "prod")
+    HTTPS_ON: bool = os.getenv("HTTPS_ON") in ["True", 1]
     DOMAIN: str = os.getenv("DOMAIN", "localhost")
+    PORT: int = int(os.getenv("PORT", 8888))
+    BASE_URL: str = f'{"https" if HTTPS_ON else "http"}://{DOMAIN}:{PORT}'
     DEBUG: bool = os.getenv("DEBUG", False) in ["True", "1"]
     API_STR: str = "/api"
     PROJECT_NAME: str = os.getenv("PROJECT_NAME", "FastAPI")
-    HTTPS_ON: bool = os.getenv("HTTPS_ON") in ["True", 1]
     AUTH_NAME: str = os.getenv("AUTH_NAME", "X-API-KEY")
     SECRET_KEY: str = os.getenv("SECRET_KEY", secrets.token_urlsafe(32))
     ALLOWED_ORIGINS: list[AnyHttpUrl | str | None] = []

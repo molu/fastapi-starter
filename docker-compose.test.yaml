@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - ENVIRONMENT=test
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./app:/usr/src/app
+    user: fastapi
+    restart: "no"
+
+  db:
+    image: postgres:14
+    volumes:
+      - postgres-test-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
+    restart: "no"
+
+volumes:
+  postgres-test-data:
