@@ -14,13 +14,13 @@ cd ${APP_HOME}/app/db && alembic upgrade head
 cd ${APP_HOME}
 
 case $ENVIRONMENT in
-    prod)
+    "prod")
         exec gunicorn -k uvicorn.workers.UvicornWorker --bind ${HOST}:${PORT} app.main:app
     ;;
-    dev)
+    "dev")
         exec uvicorn --reload --host ${HOST} --port ${PORT} --log-level ${LOG_LEVEL} app.main:app
     ;;
-    test)
+    "test")
         exec pytest ${APP_HOME}/app/tests
     ;;
 esac
