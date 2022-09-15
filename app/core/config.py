@@ -8,6 +8,7 @@ from pydantic import AnyHttpUrl, validator
 class BaseConfig:
     # Core
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "prod")
+    DOMAIN: str = os.getenv("DOMAIN", "localhost")
     DEBUG: bool = os.getenv("DEBUG", False) in ["True", "1"]
     API_STR: str = "/api"
     PROJECT_NAME: str = os.getenv("PROJECT_NAME", "FastAPI")

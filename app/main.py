@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
 from app.api.v1.router import api_router
 from app.core.config import settings
@@ -9,7 +10,7 @@ from app.core.config import settings
 def create_application() -> FastAPI:
     application = FastAPI(title=settings.PROJECT_NAME, debug=settings.DEBUG)
     application.include_router(api_router, prefix=settings.API_STR)
-
+    application.add_middleware(TrustedHostMiddleware, allowed_hosts=[settings.DOMAIN])
     if settings.ALLOWED_ORIGINS:
         application.add_middleware(
             CORSMiddleware,
