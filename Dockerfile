@@ -53,7 +53,8 @@ ENV PYTHONPATH=${APP_HOME}
 # install python dependencies
 COPY --from=builder /tmp/wheels ${APP_HOME}/wheels
 RUN pip install -U pip && \
-    pip install --no-cache ${APP_HOME}/wheels/*
+    pip install --no-cache ${APP_HOME}/wheels/* && \
+    rm -rf ${APP_HOME}/wheels
 
 # add application sources
 COPY ./app entrypoint.sh ./
