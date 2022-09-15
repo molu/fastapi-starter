@@ -18,6 +18,7 @@ class BaseConfig:
     AUTH_NAME: str = os.getenv("AUTH_NAME", "X-API-KEY")
     SECRET_KEY: str = os.getenv("SECRET_KEY", secrets.token_urlsafe(32))
     ALLOWED_ORIGINS: list[AnyHttpUrl | str | None] = []
+    TIMEZONE: str = os.getenv("TIMEZONE", "Europe/Warsaw")
 
     # Database
     POSTGRES_USER: str = os.getenv("POSTGRES_USER", "")

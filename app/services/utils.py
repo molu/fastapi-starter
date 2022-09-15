@@ -12,4 +12,4 @@ def get_logger() -> logging.Logger:
 
 
 def get_now() -> datetime:
-    return datetime.now(tz=ZoneInfo(settings.TIMEZONE))
+    return datetime.now(tz=ZoneInfo(settings.TIMEZONE)).replace(tzinfo=None)
