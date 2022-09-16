@@ -22,6 +22,8 @@ services:
       - postgres-test-data:/var/lib/postgresql/data/pgdata
     env_file:
       - .env
+    environment:
+      - POSTGRES_DB=fastapi_test
     restart: "no"
 
 volumes:
