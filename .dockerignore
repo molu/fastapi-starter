@@ -1,0 +1,6 @@
+.git*
+.env*
+.venv
+.vscode
+__pycache__
+*[d|D]ocker*
