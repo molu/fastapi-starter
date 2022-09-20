@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
     environment:
-      - POSTGRES_DB=fastapi_test
+      - POSTGRES_DB=${POSTGRES_DB}_test
     restart: "no"
 
 volumes:

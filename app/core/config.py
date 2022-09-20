@@ -1,5 +1,4 @@
 import os
-import secrets
 from functools import lru_cache
 
 from pydantic import AnyHttpUrl, validator
@@ -42,7 +41,7 @@ class BaseConfig:
 
 
 class TestingConfig(BaseConfig):
-    pass
+    DATABASE_URL: str = f"{BaseConfig.DATABASE_URL}_test"
 
 
 class DevelopmentConfig(BaseConfig):
@@ -60,8 +59,7 @@ def get_settings() -> BaseConfig:
         "prod": ProductionConfig,
         "test": TestingConfig,
     }
-    environment = os.getenv("ENVIRONMENT", "prod")
-    config_cls = config_cls_dict[environment]
+    config_cls = config_cls_dict[BaseConfig.ENVIRONMENT]
     return config_cls()
 
 
