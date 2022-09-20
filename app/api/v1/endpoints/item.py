@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import crud
 from app.db.session import get_session
 from app.schemas.item import ItemCreate, ItemRead, ItemUpdate
+from app.services.exceptions import NotFoundException
 
 router = APIRouter()
 
@@ -36,7 +37,10 @@ async def update_item(
     item_id: UUID4, item_in: ItemUpdate, session: AsyncSession = Depends(get_session)
 ) -> ItemRead:
     item_obj = await crud.item.get(session=session, id=item_id)
-    item = await crud.item.update(session=session, db_obj=item_obj, obj_in=item_in)
+    if item_obj:
+        item = await crud.item.update(session=session, db_obj=item_obj, obj_in=item_in)
+    else:
+        raise NotFoundException(msg=f"Item {item_id} not found")
     return item
 
 
