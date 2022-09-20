@@ -7,8 +7,11 @@ from app.main import app
 
 @pytest.fixture(scope="session")
 async def client() -> AsyncClient:
-    async with AsyncClient(app=app, base_url=settings.BASE_URL) as client:
-        client.headers = {"Host": settings.DOMAIN}
+    async with AsyncClient(
+        app=app,
+        base_url=settings.BASE_URL + settings.API_PREFIX,
+        headers={"Host": settings.DOMAIN},
+    ) as client:
         yield client
 
 
