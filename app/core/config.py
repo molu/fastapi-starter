@@ -11,11 +11,13 @@ class BaseConfig:
     DOMAIN: str = os.getenv("DOMAIN", "localhost")
     PORT: int = int(os.getenv("PORT", 8888))
     BASE_URL: str = f'{"https" if HTTPS_ON else "http"}://{DOMAIN}:{PORT}'
-    DEBUG: bool = os.getenv("DEBUG", False) in ["True", "1"]
+    DEBUG: bool = os.getenv("DEBUG") in ["True", "1"]
     API_PREFIX: str = "/api"
     PROJECT_NAME: str = os.getenv("PROJECT_NAME", "FastAPI")
     ALLOWED_ORIGINS: list[AnyHttpUrl | str | None] = []
     TIMEZONE: str = os.getenv("TIMEZONE", "Europe/Warsaw")
+    OPENAPI_URL: str | None = f"{API_PREFIX}/openapi.json"
+    DOCS_URL: str | None = f"{API_PREFIX}/docs"
 
     # Database
     POSTGRES_USER: str = os.getenv("POSTGRES_USER", "")
@@ -50,6 +52,8 @@ class DevelopmentConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG: bool = False
+    OPENAPI_URL: str | None = None
+    DOCS_URL: str | None = None
 
 
 @lru_cache()
