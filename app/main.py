@@ -1,3 +1,5 @@
+import importlib.metadata
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
@@ -9,14 +11,18 @@ from app.services.exceptions import exception_handlers
 from app.services.utils import get_logger
 
 logger = get_logger()
+project_metadata = importlib.metadata.metadata(__package__)
 
 
 def create_application() -> FastAPI:
     application = FastAPI(
         debug=settings.DEBUG,
         title=settings.PROJECT_NAME,
-        openapi_url=f"{settings.API_PREFIX}/openapi.json",
-        docs_url=f"{settings.API_PREFIX}/docs",
+        description=project_metadata["summary"],
+        version=project_metadata["version"],
+        openapi_url=settings.OPENAPI_URL,
+        docs_url=settings.DOCS_URL,
+        redoc_url=None,
         exception_handlers=exception_handlers,
     )
 
