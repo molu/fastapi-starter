@@ -12,7 +12,7 @@ class BaseConfig:
     PORT: int = int(os.getenv("PORT", 8888))
     BASE_URL: str = f'{"https" if HTTPS_ON else "http"}://{DOMAIN}:{PORT}'
     DEBUG: bool = os.getenv("DEBUG", False) in ["True", "1"]
-    API_STR: str = "/api"
+    API_PREFIX: str = "/api"
     PROJECT_NAME: str = os.getenv("PROJECT_NAME", "FastAPI")
     ALLOWED_ORIGINS: list[AnyHttpUrl | str | None] = []
     TIMEZONE: str = os.getenv("TIMEZONE", "Europe/Warsaw")

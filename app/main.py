@@ -8,8 +8,13 @@ from app.core.config import settings
 
 
 def create_application() -> FastAPI:
-    application = FastAPI(title=settings.PROJECT_NAME, debug=settings.DEBUG)
-    application.include_router(api_router, prefix=settings.API_STR)
+    application = FastAPI(
+        debug=settings.DEBUG,
+        title=settings.PROJECT_NAME,
+        openapi_url=f"{settings.API_PREFIX}/openapi.json",
+        docs_url=f"{settings.API_PREFIX}/docs",
+    )
+    application.include_router(api_router, prefix=settings.API_PREFIX)
     application.add_middleware(TrustedHostMiddleware, allowed_hosts=[settings.DOMAIN])
     if settings.ALLOWED_ORIGINS:
         application.add_middleware(
