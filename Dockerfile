@@ -3,31 +3,31 @@
 ####################
 FROM python:3.10-alpine as builder
 
-# install system dependencies
+# update the system and install dependencies
 RUN apk update && \
     apk upgrade --available && \
     apk add --update --no-cache build-base curl \
         postgresql-dev gcc g++ python3-dev \
         musl-dev openssl-dev libffi-dev
 
-# set environment variables
+# set the environment variables
 ENV APP_HOME /usr/src
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV POETRY_HOME /opt/poetry
 ENV POETRY_VIRTUALENVS_IN_PROJECT true
-ENV PATH "${POETRY_HOME}/bin:${PATH}"
+ENV PATH "${PATH}:${POETRY_HOME}/bin"
 
-# change working directory 
+# change the working directory 
 WORKDIR ${APP_HOME}
 
-# install dependencies
+# install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-# copy project files
+# copy the project files
 COPY . .
 
-# install project
+# install the project
 RUN if [ "${ENVIRONMENT}" = "prod" ]; then \
       poetry install --no-interaction --without dev ;\
     else \ 
@@ -44,7 +44,7 @@ RUN apk update && \
     apk upgrade --available && \
     apk add bash
 
-# set environment variables
+# set the environment variables
 ENV APP_HOME /usr/src
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -53,10 +53,11 @@ ENV PATH "${PATH}:${APP_HOME}/.venv/bin"
 
 # change the working directory
 WORKDIR ${APP_HOME}
-# make the entrypoint script executable
+
+# create the application user
 RUN addgroup -S fastapi && adduser -S fastapi -G fastapi -h ${APP_HOME}
 
-# install Python dependencies
+# copy the project files from the builder stage
 COPY --from=builder /usr/src ${APP_HOME}
 
 # change context to the application user
