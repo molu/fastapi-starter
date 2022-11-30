@@ -43,7 +43,7 @@ class BaseConfig:
 
 
 class TestingConfig(BaseConfig):
-    DATABASE_URL: str = f"{BaseConfig.DATABASE_URL}_test"
+    pass
 
 
 class DevelopmentConfig(BaseConfig):
